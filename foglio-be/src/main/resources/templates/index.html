@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Foglio - Homepage</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<section class="hero">
+    <div class="hero-content">
+        <h1>Condividi i tuoi file in sicurezza</h1>
+        <p>Foglio è la soluzione semplice e sicura per caricare, condividere e gestire i tuoi file. Registrati gratuitamente e inizia subito.</p>
+        <div class="hero-actions">
+            <a href="/ui/login" class="btn btn-primary">Inizia Ora</a>
+            <a href="#features" class="btn btn-secondary">Scopri di Più</a>
+        </div>
+    </div>
+</section>
+
+<section id="features" class="features">
+    <h2>Perché scegliere Foglio?</h2>
+    <div class="features-grid">
+        <div class="feature-card">
+            <h3>🔒 Sicurezza</h3>
+            <p>I tuoi file sono protetti con crittografia avanzata e accessibili solo con la tua API key personale.</p>
+        </div>
+        <div class="feature-card">
+            <h3>📁 Gestione Semplice</h3>
+            <p>Carica, organizza e condividi i tuoi file con un'interfaccia intuitiva e user-friendly.</p>
+        </div>
+        <div class="feature-card">
+            <h3>🌐 Accesso Ovunque</h3>
+            <p>Accedi ai tuoi file da qualsiasi dispositivo, in qualsiasi momento, con connessione internet.</p>
+        </div>
+        <div class="feature-card">
+            <h3>⚡ Veloce</h3>
+            <p>Caricamenti rapidi e download istantanei per file di qualsiasi dimensione.</p>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <h2>Pronto a iniziare?</h2>
+    <p>Unisciti a migliaia di utenti che già utilizzano Foglio per gestire i loro file.</p>
+    <form action="/ui/signup" method="get" style="display: inline;">
+        <button type="submit" class="btn btn-primary">Registrati Gratuitamente</button>
+    </form>
+</section>
+</body>
+</html>

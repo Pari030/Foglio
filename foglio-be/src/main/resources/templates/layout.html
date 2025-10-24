@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout (content)">
+<head>
+    <meta charset="UTF-8" />
+    <title>Foglio</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <nav>
+        <div class="nav-left">
+            <a href="/" class="logo">Foglio</a>
+        </div>
+        <div class="nav-right">
+            <a th:if="${user}" href="/ui/files">Dashboard</a>
+            <a th:if="${user}" href="/ui/upload">Carica</a>
+            <form th:if="${user}" th:action="@{/ui/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn-link">Logout</button>
+            </form>
+            <a th:if="${user} == null" href="/ui/login" class="btn btn-primary">Accedi</a>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <div th:if="${message}" class="message" th:text="${message}"></div>
+        <div th:if="${error}" class="error" th:text="${error}"></div>
+        <th:block th:replace="${content}" />
+    </div>
+</main>
+<footer>
+    <small>Foglio — condivisione file sicura e semplice</small>
+</footer>
+</body>
+</html>

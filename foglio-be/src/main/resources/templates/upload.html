@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout (~{::section})}">
+<head>
+    <title>Foglio - Upload</title>
+</head>
+<body>
+<section>
+    <h1>Carica file</h1>
+    <div th:if="${user} == null">
+        <p>Devi essere autenticato per caricare file. <a href="/ui">Login/Registrati</a></p>
+    </div>
+    <div th:if="${user}">
+        <form th:action="@{/ui/upload}" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" />
+            <label>
+                <input type="checkbox" name="public" value="true" /> Pubblico
+            </label>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+</section>
+</body>
+</html>

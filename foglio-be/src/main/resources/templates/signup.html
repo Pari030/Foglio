@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout (~{::section})}">
+<head>
+    <title>Foglio - Registrati</title>
+</head>
+<body>
+<section class="auth-section">
+    <h2>Registrati</h2>
+    <form th:action="@{/ui/register}" method="post">
+        <div class="form-group">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" placeholder="Il tuo nome" required />
+        </div>
+        <div class="form-group">
+            <label for="surname">Cognome:</label>
+            <input type="text" id="surname" name="surname" placeholder="Il tuo cognome" required />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Registrati" />
+    </form>
+    <p>Hai già un account? <a th:href="@{/ui/login}">Accedi</a></p>
+</section>
+</body>
+</html>
+

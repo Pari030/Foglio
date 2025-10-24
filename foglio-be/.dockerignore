@@ -1,0 +1,15 @@
+build/
+.gradle/
+gradle/
+gradlew
+gradlew.bat
+README.md
+HELP.md
+API.md
+.git
+.gitignore
+*.md
+test-results/
+tmp/
+files/
+

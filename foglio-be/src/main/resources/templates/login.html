@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout (~{::section})}">
+<head>
+    <title>Foglio - Accedi</title>
+</head>
+<body>
+<section class="auth-section">
+    <div class="tabs">
+        <button id="login-tab" class="tab-btn active">Accedi</button>
+        <button id="register-tab" class="tab-btn">Registrati</button>
+    </div>
+
+    <div id="login-form" class="auth-form">
+        <h2>Accedi con la tua API Key</h2>
+        <form th:action="@{/ui/login}" method="post">
+            <div class="form-group">
+                <label for="apiKey">API Key:</label>
+                <input type="text" id="apiKey" name="apiKey" placeholder="Incolla la tua API key qui" required />
+            </div>
+            <button type="submit" class="btn btn-primary">Accedi</button>
+        </form>
+    </div>
+
+    <div id="register-form" class="auth-form" style="display: none;">
+        <h2>Registrati</h2>
+        <form th:action="@{/ui/register}" method="post">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" placeholder="Il tuo nome" required />
+            </div>
+            <div class="form-group">
+                <label for="surname">Cognome:</label>
+                <input type="text" id="surname" name="surname" placeholder="Il tuo cognome" required />
+            </div>
+            <input type="submit" class="btn btn-primary" value="Registrati" />
+        </form>
+    </div>
+</section>
+
+<script>
+    document.getElementById('login-tab').addEventListener('click', function() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+        this.classList.add('active');
+        document.getElementById('register-tab').classList.remove('active');
+    });
+
+    document.getElementById('register-tab').addEventListener('click', function() {
+        document.getElementById('register-form').style.display = 'block';
+        document.getElementById('login-form').style.display = 'none';
+        this.classList.add('active');
+        document.getElementById('login-tab').classList.remove('active');
+    });
+</script>
+</body>
+</html>

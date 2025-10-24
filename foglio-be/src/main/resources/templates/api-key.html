@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{layout :: layout (~{::section})}">
+<head>
+    <title>Foglio - API Key</title>
+</head>
+<body>
+<section class="auth-section">
+    <h2>Registrazione Completata!</h2>
+    <p>Benvenuto <strong th:text="${userName}"></strong>!</p>
+    <p>La tua API Key personale è:</p>
+    <div class="api-key-display">
+        <code th:text="${apiKey}"></code>
+        <button onclick="copyToClipboard()" class="btn btn-secondary">Copia</button>
+    </div>
+    <p><strong>IMPORTANTE:</strong> Salva questa API Key in un posto sicuro. È il tuo UNICO identificativo per accedere al sistema. Senza di essa, non potrai più accedere ai tuoi file.</p>
+    <a href="/ui/files" class="btn btn-primary">Vai alla Dashboard</a>
+</section>
+
+<script>
+    function copyToClipboard() {
+        const apiKey = document.querySelector('code').textContent;
+        navigator.clipboard.writeText(apiKey).then(() => {
+            alert('API Key copiata negli appunti!');
+        });
+    }
+</script>
+</body>
+</html>
