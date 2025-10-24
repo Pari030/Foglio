@@ -98,4 +98,18 @@ public class FileService {
         fileEntity.setLastRequestedAt(LocalDateTime.now());
         fileRepository.save(fileEntity);
     }
+
+    public void deleteFile(File fileEntity) {
+        // Delete physical file from storage
+        Path filePath = getFilePath(fileEntity);
+        try {
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            // Log error but continue to delete DB entry
+            System.err.println("Warning: Could not delete physical file: " + filePath);
+        }
+        
+        // Delete from database
+        fileRepository.delete(fileEntity);
+    }
 }

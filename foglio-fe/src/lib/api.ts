@@ -90,6 +90,10 @@ export const fileAPI = {
     const apiKey = typeof window !== 'undefined' ? localStorage.getItem('apiKey') : '';
     return `${API_URL}/files/${fileId}/download${apiKey ? `?apiKey=${apiKey}` : ''}`;
   },
+
+  delete: async (fileId: string): Promise<void> => {
+    await api.delete(`/files/${fileId}`);
+  },
 };
 
 export default api;
