@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { fileAPI, FileMetadataDTO } from '@/lib/api';
-import { FileText, Upload, LogOut, Download, Eye, Share2, Lock, Globe, Plus } from 'lucide-react';
+import { FileText, Upload, LogOut, Download, Eye, Share2, Lock, Globe, Plus, Trash2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 
 export default function FilesPage() {
@@ -14,6 +14,8 @@ export default function FilesPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isPublic, setIsPublic] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
   const router = useRouter();
   const { user, logout, isAuthenticated, isLoading } = useAuth();
 
@@ -76,6 +78,19 @@ export default function FilesPage() {
     const url = `${window.location.origin}/file/${fileId}`;
     navigator.clipboard.writeText(url);
     alert('Link copied to clipboard!');
+  };
+
+  const handleDelete = async (fileId: string) => {
+    setDeleting(true);
+    try {
+      await fileAPI.delete(fileId);
+      setFiles(files.filter(f => f.id !== fileId));
+      setDeleteConfirmId(null);
+    } catch (error) {
+      alert('Failed to delete file. Please try again.');
+    } finally {
+      setDeleting(false);
+    }
   };
 
   if (loading) {
@@ -204,12 +219,47 @@ export default function FilesPage() {
                       <Share2 className="w-4 h-4" />
                     </button>
                   )}
+                  <button
+                    onClick={() => setDeleteConfirmId(file.id)}
+                    className="btn btn-secondary p-2 hover:bg-red-50 hover:text-red-600"
+                    title="Delete file"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
             ))}
           </div>
         )}
       </main>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6 animate-slide-up">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Delete File</h2>
+            <p className="text-gray-600 mb-6">
+              Are you sure you want to delete this file? This action cannot be undone.
+            </p>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                className="btn btn-secondary flex-1"
+                disabled={deleting}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={() => handleDelete(deleteConfirmId)}
+                className="btn bg-red-600 hover:bg-red-700 text-white flex-1"
+                disabled={deleting}
+              >
+                {deleting ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Upload Modal */}
       {showUploadModal && (

@@ -1,4 +1,4 @@
-# Foglio - Documentazione
+# Foglio
 
 Foglio è una piattaforma leggera per la condivisione di file con architettura separata: backend API in Spring Boot e frontend in Next.js servito da Nginx. Offre registrazione con API key, upload/download, anteprima per immagini/video e gestione di file pubblici/privati. Il deploy è plug‑and‑play tramite Docker Compose.
 

@@ -105,6 +105,27 @@ public class FileController {
         return FileMetadataDTO.fromEntity(saved);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable UUID id, Authentication authentication) {
+        if (authentication == null || !(authentication.getPrincipal() instanceof User user)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Authentication required");
+        }
+        
+        Optional<File> opt = fileService.getFileMetadata(id);
+        if (opt.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        
+        File file = opt.get();
+        // Check ownership - only owner can delete (public or private)
+        if (file.getOwner() == null || !file.getOwner().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You can only delete your own files");
+        }
+        
+        fileService.deleteFile(file);
+        return ResponseEntity.noContent().build();
+    }
+
     private static File getFile(Authentication authentication, Optional<File> opt) {
         if (opt.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
